@@ -127,28 +127,27 @@ class EventListener implements Listener
 		}
 	}
 
-	public function onBreak(BlockBreakEvent $e)
-	{
+	public function onBreak(BlockBreakEvent $e){
 		$p = $e->getPlayer();
 		$n = $p->getName();
 		$b = $e->getBlock();
-		if($this->ecshop->isShopExists($b))
-		{
-			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n)
-			{
+		if($this->ecshop->isShopExists($b)){
+			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n){
+				if(!$p->isOp()){
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message10"));
 				$e->setCancelled();
+				}
 			}else{
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message12"));
 				$this->ecshop->removeShop(new Position($sdata["sx"], $sdata["sy"], $sdata["sz"], $this->ecshop->server->getLevelByName($sdata["levelname"])));
 			}
 		}
-		if($this->ecshop->isShopChestExists($b))
-		{
-			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n)
-			{
+		if($this->ecshop->isShopChestExists($b)){
+			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n){
+				if(!$p->isOp()){
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message11"));
 				$e->setCancelled();
+				}
 			}else{
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message12"));
 				$this->ecshop->removeShop(new Position($sdata["sx"], $sdata["sy"], $sdata["sz"], $this->ecshop->server->getLevelByName($sdata["levelname"])));
