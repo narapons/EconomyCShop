@@ -118,7 +118,7 @@ class EventListener implements Listener
 		{
 			if($e->getAction() === 1)
 			{
-				if($this->ecshop->getShopData($b)["owner"] !== $n)
+				if($this->ecshop->getShopData($b)["owner"] !== $n && !$p->isOp())
 				{
 					$e->setCancelled();
 					$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message7"));
@@ -132,22 +132,18 @@ class EventListener implements Listener
 		$n = $p->getName();
 		$b = $e->getBlock();
 		if($this->ecshop->isShopExists($b)){
-			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n){
-				if(!$p->isOp()){
+			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n) && !$p->isOp()){
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message10"));
 				$e->setCancelled();
-				}
 			}else{
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message12"));
 				$this->ecshop->removeShop(new Position($sdata["sx"], $sdata["sy"], $sdata["sz"], $this->ecshop->server->getLevelByName($sdata["levelname"])));
 			}
 		}
 		if($this->ecshop->isShopChestExists($b)){
-			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n){
-				if(!$p->isOp()){
+			if(($sdata = $this->ecshop->getShopData($b))["owner"] !== $n && !$p->isOp()){
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message11"));
 				$e->setCancelled();
-				}
 			}else{
 				$p->sendMessage(self::ECS.$this->ecshop->getMessage("Message12"));
 				$this->ecshop->removeShop(new Position($sdata["sx"], $sdata["sy"], $sdata["sz"], $this->ecshop->server->getLevelByName($sdata["levelname"])));
